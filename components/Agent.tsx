@@ -16,9 +16,8 @@ const Agent = ({ userName }: AgentProps) => {
   const lastMessage = messages[messages.length - 1];
   return (
     <>
-      {" "}
       <div className="call-view">
-        <div className="card-interview">
+        <div className="card-interviewer">
           <div className="avatar">
             <Image
               src="/ai-avatar.png"
@@ -32,7 +31,6 @@ const Agent = ({ userName }: AgentProps) => {
           <h3>AI Interviewer</h3>
         </div>
         <div className="card-border">
-          {" "}
           <div className="card-content">
             <Image
               src="/user-avatar.png"
