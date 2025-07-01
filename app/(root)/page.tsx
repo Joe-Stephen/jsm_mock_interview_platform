@@ -1,10 +1,10 @@
 import InterviewCard from "@/components/InterviewCard";
 import { Button } from "@/components/ui/button";
+import { getCurrentUser } from "@/lib/actions/auth.aciton";
 import {
-  getCurrentUser,
   getInterviewsByUserId,
   getLatestInterviews,
-} from "@/lib/actions/auth.aciton";
+} from "@/lib/actions/general.action";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -13,7 +13,7 @@ const page = async () => {
   const user = await getCurrentUser();
   console.log("user", user);
   console.log("user?.id", user?.id);
-  const [userInterviews, latestInterviews] = await Promise.all([
+  const [userInterviews, latestInterviews]: any = await Promise.all([
     await getInterviewsByUserId(user?.id!),
     await getLatestInterviews({ userId: user?.id! }),
   ]);
@@ -45,8 +45,16 @@ const page = async () => {
         <h2>Your Interviews</h2>
         <div className="interviews-section">
           {hasPastInterviews ? (
-            userInterviews?.map((interview, index) => (
-              <InterviewCard interview={interview} key={index} />
+            userInterviews?.map((interview: any) => (
+              <InterviewCard
+                key={interview.id}
+                userId={user?.id}
+                id={interview.id}
+                role={interview.role}
+                type={interview.type}
+                techstack={interview.techstack}
+                createdAt={interview.createdAt}
+              />
             ))
           ) : (
             <p> You haven&apos;t taken any interviews yet.</p>
@@ -57,8 +65,16 @@ const page = async () => {
         <h2>Take an Interview</h2>
         <div className="interviews-section">
           {hasUpcomingInterviews ? (
-            latestInterviews?.map((interview, index) => (
-              <InterviewCard interview={interview} key={index} />
+            latestInterviews?.map((interview: any) => (
+              <InterviewCard
+                key={interview.id}
+                userId={user?.id}
+                id={interview.id}
+                role={interview.role}
+                type={interview.type}
+                techstack={interview.techstack}
+                createdAt={interview.createdAt}
+              />
             ))
           ) : (
             <p> There are no new interviews available at the moment.</p>
